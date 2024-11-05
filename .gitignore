@@ -1,0 +1,36 @@
+# Archivos y directorios específicos de Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+identifier.sqlite
+media/
+static/
+
+# Ambiente virtual (por ejemplo, si usas virtualenv o venv)
+venv/
+.env/
+Pipfile
+Pipfile.lock
+
+# Dependencias de Python (puedes agregar más si usas otras herramientas)
+/lib/
+/include/
+/bin/
+/.local/
+
+# Archivos de configuración sensibles
+*.env
+*.ini
+*.conf
+
+# Archivos generados por IDEs y editores de texto
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos temporales
+*.swp
+.DS_Store
