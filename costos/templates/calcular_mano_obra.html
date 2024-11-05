@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Calculadora de Costo de Mano de Obra</h2>
+
+        <!-- Input de Horas/Persona del Proyecto -->
+        <div class="mb-3">
+            <label for="horas_persona_proyecto" class="form-label">Horas/Persona del Proyecto</label>
+            <input type="number" id="horas_persona_proyecto" class="form-control" min="1" required>
+            <button type="button" class="btn btn-primary mt-2" onclick="crearProyecto()">Crear Proyecto</button>
+        </div>
+
+        <!-- Inputs para agregar puestos al proyecto, ocultos inicialmente -->
+        <div id="formulario_puesto" style="display: none;">
+            <div class="mb-3">
+                <label for="puesto_trabajo" class="form-label">Puesto de Trabajo</label>
+                <select id="puesto_trabajo" class="form-select" required onchange="obtenerSueldoPorHora()">
+                    <option value="" disabled selected>Seleccione un puesto</option>
+                    {% for puesto in puestos %}
+                        <option value="{{ puesto.id }}">{{ puesto.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="cantidad_personas" class="form-label">Cantidad de Personas</label>
+                <input type="number" id="cantidad_personas" class="form-control" min="1" required>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="agregarPuesto()">Agregar</button>
+        </div>
+
+        <!-- Tabla de Resultados -->
+        <div id="tabla_resultados" style="display: none;">
+            <h4>Resumen de Costo de Mano de Obra</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Nombre del Puesto</th>
+                    <th>Cantidad de Personas</th>
+                    <th>Sueldo por Hora</th>
+                    <th>Salario para el Proyecto</th>
+                    <th>Costo Total para el Puesto</th>
+                </tr>
+                </thead>
+                <tbody id="tabla_body">
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="4">Total de Costo de Mano de Obra</th>
+                    <th id="total_costo_mano_obra">$0.00</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let horasPersonaProyecto = 0;
+        let sueldoHoraActual = 0;  // Almacena el sueldo por hora del puesto seleccionado
+
+        function crearProyecto() {
+            horasPersonaProyecto = parseFloat(document.getElementById("horas_persona_proyecto").value);
+            if (isNaN(horasPersonaProyecto) || horasPersonaProyecto <= 0) {
+                alert("Ingrese un valor válido para Horas/Persona del Proyecto.");
+                return;
+            }
+
+            document.getElementById("formulario_puesto").style.display = "block";
+            document.getElementById("tabla_resultados").style.display = "block";
+
+            document.getElementById("tabla_body").innerHTML = "";
+            document.getElementById("total_costo_mano_obra").innerText = "$0.00";
+        }
+
+        function obtenerSueldoPorHora() {
+            const puestoId = document.getElementById("puesto_trabajo").value;
+            if (!puestoId) return;
+
+            fetch(`/obtener_sueldo_por_hora/${puestoId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    sueldoHoraActual = parseFloat(data.sueldo_por_hora);  // Asegura que es un float con precisión
+                })
+                .catch(error => {
+                    console.error("Error al obtener el sueldo por hora:", error);
+                    alert("Hubo un error al obtener el sueldo por hora. Inténtelo nuevamente.");
+                });
+        }
+
+        function agregarPuesto() {
+            const selectPuesto = document.getElementById("puesto_trabajo");
+            const puestoNombre = selectPuesto.options[selectPuesto.selectedIndex].text;
+            const cantidadPersonas = parseInt(document.getElementById("cantidad_personas").value);
+
+            if (isNaN(sueldoHoraActual) || isNaN(cantidadPersonas) || cantidadPersonas <= 0) {
+                alert("Complete todos los campos correctamente.");
+                return;
+            }
+
+            const salarioProyecto = sueldoHoraActual * horasPersonaProyecto;
+            const costoTotalPuesto = salarioProyecto * cantidadPersonas;
+
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+            <td>${puestoNombre}</td>
+            <td>${cantidadPersonas}</td>
+            <td>$${sueldoHoraActual.toFixed(2)}</td>
+            <td>$${salarioProyecto.toFixed(2)}</td>
+            <td>$${costoTotalPuesto.toFixed(2)}</td>
+        `;
+
+            document.getElementById("tabla_body").appendChild(fila);
+            actualizarTotalCostoManoObra();
+        }
+
+        function actualizarTotalCostoManoObra() {
+            const filas = document.querySelectorAll("#tabla_body tr");
+            let total = 0;
+
+            filas.forEach(fila => {
+                const costoTotalPuesto = parseFloat(fila.cells[4].innerText.replace("$", ""));
+                total += costoTotalPuesto;
+            });
+
+            document.getElementById("total_costo_mano_obra").innerText = `$${total.toFixed(2)}`;
+        }
+    </script>
+{% endblock %}

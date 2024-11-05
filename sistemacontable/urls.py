@@ -15,8 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import render
 from django.urls import path
+from costos import views as costos_views
+
+
+def inicio_view(request):
+    return render(request, 'inicio.html')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', inicio_view, name='inicio'),
+    path('lista_puestos/', costos_views.lista_puestos, name='lista_puestos'),
+    path('agregar_puesto/', costos_views.agregar_puesto, name='agregar_puesto'),
+    path('calcular_costo_mano_obra/', costos_views.calcular_costo_mano_obra, name='calcular_costo_mano_obra'),
+    path('obtener_sueldo_por_hora/<int:puesto_id>/', costos_views.obtener_sueldo_por_hora,
+         name='obtener_sueldo_por_hora'),
+    path('calcular_costos_indirectos/', costos_views.calcular_costos_indirectos, name='calcular_costos_indirectos'),
 ]

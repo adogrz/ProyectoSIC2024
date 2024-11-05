@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Calculadora de Costos Indirectos del Proyecto</h2>
+
+        <!-- Inputs para ingresar los costos indirectos -->
+        <div class="mb-3">
+            <label for="costo_internet" class="form-label">Costo por Servicio de Internet</label>
+            <input type="number" id="costo_internet" class="form-control" min="0" step="0.01">
+        </div>
+        <div class="mb-3">
+            <label for="costo_alquiler" class="form-label">Costo por Alquiler de Local</label>
+            <input type="number" id="costo_alquiler" class="form-control" min="0" step="0.01">
+        </div>
+        <div class="mb-3">
+            <label for="costo_energia" class="form-label">Costo por Servicio de Energía Eléctrica</label>
+            <input type="number" id="costo_energia" class="form-control" min="0" step="0.01">
+        </div>
+        <div class="mb-3">
+            <label for="costo_agua" class="form-label">Costo por Servicio de Agua Potable</label>
+            <input type="number" id="costo_agua" class="form-control" min="0" step="0.01">
+        </div>
+        <div class="mb-3">
+            <label for="costo_licencias_desarrollo" class="form-label">Licencias de Software para Desarrolladores y Testers</label>
+            <input type="number" id="costo_licencias_desarrollo" class="form-control" min="0" step="0.01">
+        </div>
+        <div class="mb-3">
+            <label for="costo_licencias_diseno" class="form-label">Licencias de Software para Diseñadores</label>
+            <input type="number" id="costo_licencias_diseno" class="form-control" min="0" step="0.01">
+        </div>
+
+        <!-- Botón para calcular los costos -->
+        <button type="button" class="btn btn-primary mt-3" onclick="calcularCostosIndirectos()">Calcular Costos Indirectos</button>
+
+        <!-- Tabla de resultados -->
+        <div id="tabla_resultados" style="display: none;" class="mt-4">
+            <h4>Resumen de Costos Indirectos</h4>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Descripción</th>
+                    <th>Costo</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Servicio de Internet</td>
+                    <td id="resultado_internet">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Alquiler de Local</td>
+                    <td id="resultado_alquiler">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Servicio de Energía Eléctrica</td>
+                    <td id="resultado_energia">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Servicio de Agua Potable</td>
+                    <td id="resultado_agua">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Licencias de Software para Desarrolladores y Testers</td>
+                    <td id="resultado_licencias_desarrollo">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Licencias de Software para Diseñadores</td>
+                    <td id="resultado_licencias_diseno">$0.00</td>
+                </tr>
+                <tr>
+                    <td>Gastos Administrativos (Sueldos del Personal Administrativo)</td>
+                    <td id="resultado_administrativo">${{ gasto_administrativo|floatformat:2 }}</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Total de Costos Indirectos</th>
+                    <th id="total_costos_indirectos">$0.00</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Variable para almacenar el gasto administrativo cargado desde el servidor
+        const gastoAdministrativo = parseFloat("{{ gasto_administrativo|floatformat:2 }}");
+
+        function calcularCostosIndirectos() {
+            // Obtener los valores de los inputs
+            const costoInternet = parseFloat(document.getElementById("costo_internet").value) || 0;
+            const costoAlquiler = parseFloat(document.getElementById("costo_alquiler").value) || 0;
+            const costoEnergia = parseFloat(document.getElementById("costo_energia").value) || 0;
+            const costoAgua = parseFloat(document.getElementById("costo_agua").value) || 0;
+            const costoLicenciasDesarrollo = parseFloat(document.getElementById("costo_licencias_desarrollo").value) || 0;
+            const costoLicenciasDiseno = parseFloat(document.getElementById("costo_licencias_diseno").value) || 0;
+
+            // Mostrar cada costo en la tabla de resultados
+            document.getElementById("resultado_internet").innerText = `$${costoInternet.toFixed(2)}`;
+            document.getElementById("resultado_alquiler").innerText = `$${costoAlquiler.toFixed(2)}`;
+            document.getElementById("resultado_energia").innerText = `$${costoEnergia.toFixed(2)}`;
+            document.getElementById("resultado_agua").innerText = `$${costoAgua.toFixed(2)}`;
+            document.getElementById("resultado_licencias_desarrollo").innerText = `$${costoLicenciasDesarrollo.toFixed(2)}`;
+            document.getElementById("resultado_licencias_diseno").innerText = `$${costoLicenciasDiseno.toFixed(2)}`;
+            document.getElementById("resultado_administrativo").innerText = `$${gastoAdministrativo.toFixed(2)}`;
+
+            // Calcular el total de costos indirectos
+            const totalCostosIndirectos = costoInternet + costoAlquiler + costoEnergia + costoAgua +
+                costoLicenciasDesarrollo + costoLicenciasDiseno + gastoAdministrativo;
+
+            // Mostrar el total en la tabla
+            document.getElementById("total_costos_indirectos").innerText = `$${totalCostosIndirectos.toFixed(2)}`;
+
+            // Mostrar la tabla de resultados
+            document.getElementById("tabla_resultados").style.display = "block";
+        }
+    </script>
+{% endblock %}

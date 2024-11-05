@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Agregar Nuevo Puesto</h2>
+        <form action="{% url 'agregar_puesto' %}" method="post" onsubmit="return validarFormulario()">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="nombre" class="form-label">Nombre del Cargo/Puesto</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="salario_diario" class="form-label">Salario Diario</label>
+                    <input type="number" step="0.01" class="form-control" id="salario_diario" required>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="horas_trabajadas" class="form-label">Horas trabajadas al día</label>
+                    <input type="number" class="form-control" id="horas_trabajadas" required>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="dias_laborales" class="form-label">Días laborados a la semana</label>
+                    <input type="number" class="form-control" id="dias_laborales" required>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="dias_vacaciones" class="form-label">Días de vacaciones</label>
+                    <input type="number" class="form-control" id="dias_vacaciones" required>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="recargo_vacacion" class="form-label">Porcentaje de recargo de vacación</label>
+                    <input type="number" step="0.01" class="form-control" id="recargo_vacacion" required>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="dias_aguinaldo" class="form-label">Días de aguinaldo</label>
+                    <input type="number" class="form-control" id="dias_aguinaldo" required>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="eficiencia" class="form-label">Porcentaje de eficiencia</label>
+                    <input type="number" step="0.01" class="form-control" id="eficiencia" required>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="es_administrativo" class="form-label">¿Es un puesto administrativo?</label>
+                    <select id="es_administrativo" name="es_administrativo" class="form-control" required>
+                        <option value="True">Sí</option>
+                        <option value="False">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" onclick="calcular()">Calcular</button>
+                <button type="submit" class="btn btn-primary">Agregar Puesto</button>
+            </div>
+
+            <div id="resultados" class="mt-4" style="display: none;">
+                <h4>Resultados de Cálculos</h4>
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>Sueldo Mensual</th>
+                        <td id="sueldo_mensual"></td>
+                    </tr>
+                    <tr>
+                        <th>Sueldo por Hora</th>
+                        <td id="sueldo_hora"></td>
+                    </tr>
+                    <tr>
+                        <th>Septimo Día</th>
+                        <td id="septimo_dia"></td>
+                    </tr>
+                    <tr>
+                        <th>Costo Vacaciones</th>
+                        <td id="costo_vacaciones"></td>
+                    </tr>
+                    <tr>
+                        <th>Costo Aguinaldo</th>
+                        <td id="costo_aguinaldo"></td>
+                    </tr>
+                    <tr>
+                        <th>Costo ISSS</th>
+                        <td id="costo_isss"></td>
+                    </tr>
+                    <tr>
+                        <th>Costo AFP</th>
+                        <td id="costo_afp"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <input type="hidden" id="sueldo_mensual_hidden" name="sueldo_mensual">
+            <input type="hidden" id="sueldo_hora_hidden" name="sueldo_hora">
+        </form>
+    </div>
+
+    <script>
+        function calcular() {
+            if (!validarFormulario()) {
+                return;
+            }
+
+            const salarioDiario = parseFloat(document.getElementById("salario_diario").value);
+            const horasTrabajadas = parseInt(document.getElementById("horas_trabajadas").value);
+            const diasLaborales = parseInt(document.getElementById("dias_laborales").value);
+            const diasVacaciones = parseInt(document.getElementById("dias_vacaciones").value);
+            const recargoVacacion = parseFloat(document.getElementById("recargo_vacacion").value) / 100;
+            const diasAguinaldo = parseInt(document.getElementById("dias_aguinaldo").value);
+            const eficiencia = parseFloat(document.getElementById("eficiencia").value) / 100;
+
+            // Cálculos
+            const septimoDia = salarioDiario * 7;
+            const costoVacacionesSemanal = ((1 + recargoVacacion) * salarioDiario * diasVacaciones) / 52;
+            const costoAguinaldoSemanal = (salarioDiario * diasAguinaldo) / 52;
+            const costoISSS = (septimoDia + costoVacacionesSemanal) * 0.075; // 7.5%
+            const costoAFP = (septimoDia + costoVacacionesSemanal) * 0.0775; // 7.75%
+
+            const costoRealSemanal = septimoDia + costoVacacionesSemanal + costoAguinaldoSemanal + costoISSS + costoAFP;
+            const costoRealDia = costoRealSemanal / diasLaborales;
+            const costoRealHora = costoRealDia / horasTrabajadas;
+            const factorRecargoEficiencia = costoRealDia / (salarioDiario * eficiencia);
+
+            const sueldoMensual = costoRealSemanal * factorRecargoEficiencia * 4; // Aproximado a 4 semanas
+            const sueldoHora = costoRealHora * factorRecargoEficiencia;
+
+            // Actualiza la tabla de resultados
+            document.getElementById("sueldo_mensual").innerText = `$${sueldoMensual.toFixed(2)}`;
+            document.getElementById("sueldo_hora").innerText = `$${sueldoHora.toFixed(2)}`;
+            document.getElementById("septimo_dia").innerText = `$${septimoDia.toFixed(2)}`;
+            document.getElementById("costo_vacaciones").innerText = `$${costoVacacionesSemanal.toFixed(2)}`;
+            document.getElementById("costo_aguinaldo").innerText = `$${costoAguinaldoSemanal.toFixed(2)}`;
+            document.getElementById("costo_isss").innerText = `$${costoISSS.toFixed(2)}`;
+            document.getElementById("costo_afp").innerText = `$${costoAFP.toFixed(2)}`;
+
+            // Coloca los valores en los campos ocultos para el formulario
+            document.getElementById("sueldo_mensual_hidden").value = sueldoMensual.toFixed(2);
+            document.getElementById("sueldo_hora_hidden").value = sueldoHora.toFixed(2);
+
+            // Muestra la sección de resultados
+            document.getElementById("resultados").style.display = "block";
+        }
+
+        function validarFormulario() {
+            const inputs = document.querySelectorAll("input[required]");
+            let valido = true;
+            inputs.forEach(input => {
+                if (!input.value) {
+                    input.classList.add("is-invalid");
+                    valido = false;
+                } else {
+                    input.classList.remove("is-invalid");
+                }
+            });
+            return valido;
+        }
+    </script>
+{% endblock %}

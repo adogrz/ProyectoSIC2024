@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Puestos en la Empresa</h2>
+        <table class="table table-bordered mt-4">
+            <thead>
+            <tr>
+                <th>Nombre del Puesto</th>
+                <th>Sueldo Mensual</th>
+                <th>Sueldo por Hora</th>
+                <th>Tipo de Puesto</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for puesto in puestos %}
+                <tr>
+                    <td>{{ puesto.nombre }}</td>
+                    <td>${{ puesto.sueldo_mensual }}</td>
+                    <td>${{ puesto.sueldo_por_hora }}</td>
+                    {% if puesto.es_administrativo %}
+                        <td>Administrativo</td>
+                    {% else %}
+                        <td>No Administrativo</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'agregar_puesto' %}" class="btn btn-primary mt-3">Agregar Nuevo Puesto</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const rows = document.querySelectorAll("tbody tr");
+            rows.forEach(row => {
+                const sueldoMensualCell = row.cells[1]; // Columna Sueldo Mensual
+                const sueldoPorHoraCell = row.cells[2]; // Columna Sueldo por Hora
+
+                // Reemplazar coma por punto
+                sueldoMensualCell.innerHTML = sueldoMensualCell.innerHTML.replace(',', '.');
+                sueldoPorHoraCell.innerHTML = sueldoPorHoraCell.innerHTML.replace(',', '.');
+            });
+        });
+    </script>
+{% endblock %}
