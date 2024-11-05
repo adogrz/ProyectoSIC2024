@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-4 text-center">Costo de Venta</h2>
+        <div class="card mx-auto" style="max-width: 400px; border: 1px solid #ddd; border-radius: 8px; padding: 20px;">
+            <form id="costForm">
+                <div class="form-group">
+                    <label for="laborCost">Mano de Obra Directa "MOD":</label>
+                    <input type="number" class="form-control" id="laborCost" name="laborCost" required>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="varCost">Variación 30%:</label>
+                    <input type="number" class="form-control" id="varCost" name="varCost" readonly>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="unitCost">Costo Unitario:</label>
+                    <input type="number" class="form-control" id="unitCost" name="unitCost" readonly>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="indCost">Costos Indirectos "CI":</label>
+                    <input type="number" class="form-control" id="indCost" name="indCost" required>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="rateCIF">Tasa CIF %:</label>
+                    <input type="number" class="form-control" id="rateCIF" name="rateCIF" readonly>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="CIF">Valor correspondiente al CIF:</label>
+                    <input type="number" class="form-control" id="CIF" name="CIF" readonly>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="saleCost">Costo de Venta:</label>
+                    <input type="number" class="form-control" id="saleCost" name="saleCost" readonly>
+                </div>
+                <button type="button" class="btn btn-primary mt-3 w-100" onclick="calculateCost()">Calcular</button>
+                <button type="reset" class="btn btn-danger mt-3 w-100">Limpiar</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function calculateCost() {
+            // Obtener valores de los campos existentes
+            var laborCost = parseFloat(document.getElementById('laborCost').value) || 0;
+            var indCost = parseFloat(document.getElementById('indCost').value) || 0;
+            
+            // Calcular varCost, unitCost, y rateCIF
+            var varCost = laborCost * 0.3;
+            var unitCost = laborCost + varCost;
+            var rateCIF = Math.round(indCost / laborCost) ;
+            
+            // Asignar valores calculados a los campos correspondientes
+            document.getElementById('varCost').value = varCost.toFixed(2);
+            document.getElementById('unitCost').value = unitCost.toFixed(2);
+            document.getElementById('rateCIF').value = rateCIF.toFixed(2);
+
+            // Calcular el CIF y el costo de venta
+            var CIF = unitCost * (rateCIF/100);
+            var saleCost = CIF + unitCost;
+
+            document.getElementById('CIF').value = CIF.toFixed(2);
+            document.getElementById('saleCost').value = saleCost.toFixed(2);
+        }
+    </script>
+</body>
+
+
+
+
+{% endblock %}

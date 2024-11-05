@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def costo_ucp(request):
+    return render(request, 'costo_ucp.html')
+
+def costo_venta(request):
+    return render(request, 'costo_venta.html')

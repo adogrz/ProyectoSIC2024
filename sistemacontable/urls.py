@@ -18,10 +18,13 @@ from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path
 from costos import views as costos_views
+from ucp import views as ucp_views
 
 
 def inicio_view(request):
     return render(request, 'inicio.html')
+
+
 
 
 urlpatterns = [
@@ -33,4 +36,7 @@ urlpatterns = [
     path('obtener_sueldo_por_hora/<int:puesto_id>/', costos_views.obtener_sueldo_por_hora,
          name='obtener_sueldo_por_hora'),
     path('calcular_costos_indirectos/', costos_views.calcular_costos_indirectos, name='calcular_costos_indirectos'),
+    # UCP
+    path('costo_ucp/', ucp_views.costo_ucp, name='costo_ucp'),
+    path('costo_venta/', ucp_views.costo_venta, name='costo_venta'),
 ]
