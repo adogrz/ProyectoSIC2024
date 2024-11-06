@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+  
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  
+  <body class="bg-light">
+  
+    <div class="container">
+  
+      <div class="py-5 text-center">
+        <h2>Registrar Transaccion</h2>
+      </div>
+  
+      <div class="container col-lg-8">
+        <h4 class="mb-3">Formulario de Transaccion</h4><br>
+  
+  
+        <form class="needs-validation" novalidate enctype="multipart/form-data" method="post">
+          {% csrf_token %}
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label for="lista-principal" class="form-label">Tipo de Cuenta</label>
+              <select class="form-select" id="lista-principal" name="tipoDeCuenta" required>
+                <option value="Activo">Activo</option>
+                <option value="Pasivo">Pasivo</option>
+                <option value="Patrimonio">Patrimonio</option>
+                <option value="Resultado Deudor">Resultado Deudor</option>
+                <option value="Resultado Acreedor">Resultado Acreedor</option>
+                <option value="Cuenta de Cierre">Cuenta de Cierre</option>
+              </select>
+            </div>
+  
+            <div class="col-md-4">
+              <label for="lista-secundaria" class="form-label">Cuenta</label>
+              <select class="form-select" id="lista-secundaria" name="codigo_cuenta" required>
+                  <option value="" disabled selected>Selecciona una cuenta</option>
+              </select>
+          </div>
+  
+            <div class="col-md-4">
+              <label for="state" class="form-label">Tipo de monto</label>
+              <select name="tipoDeMonto" class="form-select" id="state" required>
+                <option value="Debe">Debe</option>
+                <option value="Haber">Haber</option>
+              </select>
+            </div>
+          </div><br>
+  
+          <div class="col-md-12">
+            <label for="address" class="form-label">Monto</label>
+            <input type="number" name="montoTransaccion" class="form-control" id="address"
+              placeholder="Digite el monto de la transaccion" required>
+            <div class="invalid-feedback">
+              Debe digitar un monto
+            </div>
+          </div><br>
+  
+          <div class="col-md-12">
+            <label for="address2" class="form-label"> Descripcion de la transaccion </label>
+            <input type="text" class="form-control" id="address2" name="descripcion" required>
+            <div class="invalid-feedback">
+              Escriba una descripcion
+            </div>
+          </div>
+  
+          <div class="row g-3">
+            <div class="col-md-12">
+              <hr class="my-4">
+            </div>
+          </div>
+  
+          <div class="row g-3">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <button class="w-100 btn btn-primary btn-lg" type="submit">Agregar Transaccion</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    </div>
+  
+    <script src="../static/js/form-validation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      
+  
+    
+  </body>
+
+{% endblock %}
