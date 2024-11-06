@@ -1,0 +1,501 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<body>
+    <div class="container">
+
+        <div class="py-5 text-center">
+            <h2>Método de Estimación de Costos "UCP"</h2>
+        </div>
+           <!-- Clasificación de los casos de uso sin ajuste "Enfoque trasaccional" -->
+           <div class="row">
+            <div class="table-responsive">
+                <table id="actorsTable1" class="table table-striped table-sm" style="border-collapse: collapse; width: 100%;">
+                    <!-- Botones para agregar y eliminar filas -->
+                    <button class="btn btn-primary me-2" onclick="addRow1()" title="Agregar Fila">
+                        <i class="fas fa-plus"></i> Agregar Fila
+                    </button>
+                    <button class="btn btn-danger" onclick="deleteLastRow1()" title="Eliminar Última Fila">
+                        <i class="fas fa-trash-alt"></i> Eliminar Fila
+                    </button>
+                    <thead>
+                        <tr>
+                            <th colspan="5" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">
+                                Clasificación de casos de uso sin ajuste "Enfoque transaccional"
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid #333; text-align: center;">Caso de Uso</th>
+                            <th style="border: 1px solid #333; text-align: center;">Complejidad</th>
+                            <th style="border: 1px solid #333; text-align: center;">Peso</th>
+                            <th style="border: 1px solid #333; text-align: center;">Cantidad</th>
+                            <th style="border: 1px solid #333; text-align: center;">Producto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- El tbody comienza vacío -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="border: 1px solid #333; text-align: right;"><strong>Total</strong></td>
+                            <td style="border: 1px solid #333;" id="totalProduct">0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+          
+
+    <!-- Clasificación de actores sin ajuste -->
+    <div class="row">
+        <div class="table-responsive">
+            <table id="actorsTable2" class="table table-striped table-sm" style="border-collapse: collapse; width: 100%;">
+                <button class="btn btn-primary me-2" onclick="addRow2()" title="Agregar Fila">
+                    <i class="fas fa-plus"></i> Agregar Fila
+                </button>
+                <button class="btn btn-danger" onclick="deleteLastRow2()" title="Eliminar Última Fila">
+                    <i class="fas fa-trash-alt"></i> Eliminar Fila
+                </button>
+                <thead>
+                    <tr>
+                        <th colspan="5" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">
+                            Clasificación de actores sin ajuste
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #333; text-align: center;">Actores</th>
+                        <th style="border: 1px solid #333; text-align: center;">Tipo de actor</th>
+                        <th style="border: 1px solid #333; text-align: center;">Peso</th>
+                        <th style="border: 1px solid #333; text-align: center;">Cantidad</th>
+                        <th style="border: 1px solid #333; text-align: center;">Producto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- El tbody comienza vacío -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" style="border: 1px solid #333; text-align: right;"><strong>Total</strong></td>
+                        <td style="border: 1px solid #333;" id="totalProduct2">0</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+       <!-- Calculo de la suma de los pesos de PA+PCU=UUCP -->
+       <div class="row">
+        <div class="table-responsive">
+            <table id="uucpTable" class="table table-striped table-sm" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th colspan="3" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">PA + PCU = UUCP</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #333; text-align: center; width: 50%;">Producto de actores</th>
+                        <th style="border: 1px solid #333; text-align: center; width: 50%;">Producto de casos de uso</th>
+                        <th style="border: 1px solid #333; text-align: center; width: 50%;">UUCP</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr>
+                        <td id="PA" style="border: 1px solid #333; text-align: center;"></td>
+                        <td id="PCU" style="border: 1px solid #333; text-align: center;"></td>
+                        <td id="uucp" style="border: 1px solid #333; text-align: center;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+         <!-- Factores de complejidad-->
+         <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm" style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th colspan="5" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">Factores Tecnicos "TF"</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid #333; text-align: center;">Factor</th>
+                            <th style="border: 1px solid #333; text-align: center;">Descripción</th>
+                            <th style="border: 1px solid #333; text-align: center;">Peso</th>
+                            <th style="border: 1px solid #333; text-align: center;">Evaluación</th>
+                            <th style="border: 1px solid #333; text-align: center;">Impacto</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T1</b></td>
+                            <td style="border: 1px solid #333;">Sistema distribuido</td>
+                            <td style="border: 1px solid #333;text-align: center;">2</td>
+                            <td id="EvaT1" style="border: 1px solid #333;"></td>
+                            <td id="ImT1"  style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T2</b></td>
+                            <td style="border: 1px solid #333;">Objetivos de rendimiento</td>
+                            <td style="border: 1px solid #333;text-align: center;">2</td>
+                            <td id="EvaT2" style="border: 1px solid #333;"></td>
+                            <td id="ImT2" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T3</b></td>
+                            <td style="border: 1px solid #333;">Eficiencia de rendimiento</td>
+                            <td style="border: 1px solid #333;text-align: center;">1</td>
+                            <td id="EvaT3" style="border: 1px solid #333;"></td>
+                            <td id="ImT3" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T4</b></td>
+                            <td style="border: 1px solid #333;">Procesamiento complejo</td>
+                            <td style="border: 1px solid #333;text-align: center;">1</td>
+                            <td id="EvaT4" style="border: 1px solid #333;"></td>
+                            <td id="ImT4" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T5</b></td>
+                            <td style="border: 1px solid #333;">Código reutilizable</td>
+                            <td style="border: 1px solid #333;text-align: center;">1</td>
+                            <td id="EvaT5" style="border: 1px solid #333;"></td>
+                            <td id="ImT5" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T6</b></td>
+                            <td style="border: 1px solid #333;">Facilidad de instalación</td>
+                            <td style="border: 1px solid #333;text-align: center;">0.5</td>
+                            <td id="EvaT6" style="border: 1px solid #333;"></td>
+                            <td id="ImT6" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T7</b></td>
+                            <td style="border: 1px solid #333;">Facilidad de Uso</td>
+                            <td style="border: 1px solid #333;text-align: center;">0.5</td>
+                            <td id="EvaT7" style="border: 1px solid #333;"></td>
+                            <td id="ImT7" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T8</b></td>
+                            <td style="border: 1px solid #333;">Portable</td>
+                            <td style="border: 1px solid #333;text-align: center;">2</td>
+                            <td id="EvaT8" style="border: 1px solid #333;"></td>
+                            <td id="ImT8" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T9</b></td>
+                            <td style="border: 1px solid #333;">Facilidad de cambios</td>
+                            <td style="border: 1px solid #333;text-align: center;">1</td>
+                            <td id="EvaT9" style="border: 1px solid #333;"></td>
+                            <td id="ImT9" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T10</b></td>
+                            <td style="border: 1px solid #333;">Concurrencia de uso</td>
+                            <td style="border: 1px solid #333;text-align: center;">1</td>
+                            <td id="EvaT10" style="border: 1px solid #333;"></td>
+                            <td id="ImT10" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T11</b></td>
+                            <td style="border: 1px solid #333;">Seguridad</td>
+                            <td style="border: 1px solid #333;text-align: center;">1</td>
+                            <td id="EvaT11" style="border: 1px solid #333;"></td>
+                            <td id="ImT11" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T12</b></td>
+                            <td style="border: 1px solid #333;">Acceso para terceros</td>
+                            <td style="border: 1px solid #333;text-align: center;">1</td>
+                            <td id="EvaT12" style="border: 1px solid #333;"></td>
+                            <td id="ImT12" style="border: 1px solid #333;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;"><b>T13</b></td>
+                            <td style="border: 1px solid #333;">Necesidad de entrenamiento</td>
+                            <td style="border: 1px solid #333;text-align: center;">1</td>
+                            <td id="EvaT13" style="border: 1px solid #333;"></td>
+                            <td id="ImT13" style="border: 1px solid #333;"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" style="border: 1px solid #333; text-align: right;"><strong>Total</strong></td>
+                            <td id="totalTF" style="border: 1px solid #333;"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+                <!-- Formula de los factores técnicos de complejidad -->
+                <!-- 0.6+(TF*0.01)=TCF-->
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
+                            <thead>
+                                <tr>
+                                    <th colspan="3" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">Factores técnicos de complejidad "TCF"</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" style="border: 1px solid #333; text-align: center;">TCF=0.6+(TF*0.01)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td id="tcf" colspan="3" style="border: 1px solid #333; text-align: center;"></td>        
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            <!-- Factores ambientales -->
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm" style="border-collapse: collapse; width: 100%; table-layout: fixed;">
+                            <thead>
+                                <tr>
+                                    <th colspan="5" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">Factores ambientales "Ef"</th>
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid #333; text-align: center; width: 15%;">Factor</th>
+                                    <th style="border: 1px solid #333; text-align: center; width: 40%;">Descripción</th>
+                                    <th style="border: 1px solid #333; text-align: center; width: 10%;">Peso</th>
+                                    <th style="border: 1px solid #333; text-align: center; width: 15%;">Evaluación</th>
+                                    <th style="border: 1px solid #333; text-align: center; width: 20%;">Impacto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #333;"><b>E1</b></td>
+                                    <td style="border: 1px solid #333;">Familiarización con el proceso de desarrollo</td>
+                                    <td style="border: 1px solid #333; text-align: center;">1.5</td>
+                                    <td id="EvaEf1" style="border: 1px solid #333;"></td>
+                                    <td id="ImEf1" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #333;"><b>E2</b></td>
+                                    <td style="border: 1px solid #333;">Experiencia de aplicación</td>
+                                    <td style="border: 1px solid #333; text-align: center;">0.5</td>
+                                    <td id="EvaEf2" style="border: 1px solid #333;"></td>
+                                    <td id="ImEf2" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #333;"><b>E3</b></td>
+                                    <td style="border: 1px solid #333;">Experiencia orientada a objetos</td>
+                                    <td style="border: 1px solid #333; text-align: center;">1</td>
+                                    <td id="EvaEf3" style="border: 1px solid #333;"></td>
+                                    <td id="ImEf3" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #333;"><b>E4</b></td>
+                                    <td style="border: 1px solid #333;">Capacidad de analista líder</td>
+                                    <td style="border: 1px solid #333; text-align: center;">0.5</td>
+                                    <td id="EvaEf4" style="border: 1px solid #333;"></td>
+                                    <td id="ImEf4" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #333;"><b>E5</b></td>
+                                    <td style="border: 1px solid #333;">Motivación</td>
+                                    <td style="border: 1px solid #333; text-align: center;">1</td>
+                                    <td id="EvaEf5" style="border: 1px solid #333;"></td>
+                                    <td id="ImEf5" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #333;"><b>E6</b></td>
+                                    <td style="border: 1px solid #333;">Requisitos estables</td>
+                                    <td style="border: 1px solid #333; text-align: center;">2</td>
+                                    <td id="EvaEf6" style="border: 1px solid #333;"></td>
+                                    <td id="ImEf6" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #333;"><b>E7</b></td>
+                                    <td style="border: 1px solid #333;">Personal a tiempo parcial</td>
+                                    <td style="border: 1px solid #333; text-align: center;">-1</td>
+                                    <td id="EvaEf7" style="border: 1px solid #333;"></td>
+                                    <td id="ImEf7" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #333;"><b>E8</b></td>
+                                    <td style="border: 1px solid #333;">Dificultad del Lenguaje de Programación</td>
+                                    <td style="border: 1px solid #333; text-align: center;">-1</td>
+                                    <td id="EvaEf8" style="border: 1px solid #333;"></td>
+                                    <td id="ImEf8" style="border: 1px solid #333;"></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" style="border: 1px solid #333; text-align: right;"><strong>Total</strong></td>
+                                    <td id="totalEf" style="border: 1px solid #333;"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+
+        <!-- Formula de los factores ambientales calculo -->
+          <!-- 1.4+(-0.03*Ef)=EF-->
+          <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm" style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th colspan="3" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">Factores ambientales "EF"</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3" style="border: 1px solid #333; text-align: center;">EF=1.4+(-0.03*Ef)</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td id="totalEF" style="border: 1px solid #333; text-align: center;"></td>        
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+         <!-- Determinación de los casos de uso ajustados "UCP"-->
+         <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm" style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th colspan="5" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">Casos de usos ajustados "UCP"</th>
+                        </tr>
+                        <tr>
+                            <th colspan="5" style="border: 1px solid #333; text-align: center;">UUCP*TCF*EF=UCP</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid #333; text-align: center;">UUCP</th>
+                            <th style="border: 1px solid #333; text-align: center;">TCF</th>
+                            <th style="border: 1px solid #333; text-align: center;">EF</th>
+                            <th style="border: 1px solid #333; text-align: center;">UCP</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td id="ttuucp" style="border: 1px solid #333; text-align: center;"></td>
+                            <td id="tttcf" style="border: 1px solid #333; text-align: center;"></td>
+                            <td id="ttef" style="border: 1px solid #333; text-align: center;"></td>
+                            <td id="ttucp"style="border: 1px solid #333; text-align: center;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        <!-- Factor de conversion Horas-Persona-->
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table table-striped table-sm" style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th id="refreshCF" colspan="2" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">Factor de Conversion Horas-Persona "CF"</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid #333; text-align: center;">Horas-Persona</th>
+                            <th style="border: 1px solid #333; text-align: center;">Intervalo</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr>
+                            <td style="border: 1px solid #333;text-align: center;">20</td>
+                            <td style="border: 1px solid #333;text-align: center;">Menor o igual a 2</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;text-align: center;">28</td>
+                            <td style="border: 1px solid #333;text-align: center;">Menor o igual a 4</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #333;text-align: center;">36</td>
+                            <td style="border: 1px solid #333;text-align: center;">Mayor o igual a 5</td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+             <!-- Determinación de las horas totales o Esfuerzo "E"-->
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm" style="border-collapse: collapse; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th colspan="3" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">Determinación de las horas totales o Esfuerzo "E"</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="3" style="border: 1px solid #333; text-align: center;">CF*UCP=E</th>
+                                </tr>
+                                <tr>
+                                    <th style="border: 1px solid #333; text-align: center;">CF</th>
+                                    <th style="border: 1px solid #333; text-align: center;">UCP</th>
+                                    <th style="border: 1px solid #333; text-align: center;">E</th>
+                                </tr>
+                            </thead>
+                            <tbody> 
+                                <tr>
+                                    <td id="ttCF" style="border: 1px solid #333;text-align: center;"></td>
+                                    <td id="tttUCP" style="border: 1px solid #333;text-align: center;"></td>
+                                    <td id="ttE" style="border: 1px solid #333;text-align: center;"></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" style="border: 1px solid #333; text-align: right;"><strong>Total de horas</strong></td>
+                                    <td id="tth" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="border: 1px solid #333; text-align: right;"><strong>Total de semanas</strong></td>
+                                    <td id="tts" style="border: 1px solid #333;"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="border: 1px solid #333; text-align: right;"><strong>Total de mes o meses</strong></td>
+                                    <td id="ttm" style="border: 1px solid #333;"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <!-- Determinación horas por persona-->
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-sm" style="border-collapse: collapse; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2" style="text-align: center; background-color: cadetblue; border: 1px solid #333;">Determinación de las Horas/Personas asignadas</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="2" style="text-align: center; border: 1px solid #333;">E/Cantidad de empleados asignados</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="border: 1px solid #333; text-align: center;">E</th>
+                                        <th style="border: 1px solid #333; text-align: center;">Empleados asignados</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    <tr>
+                                        <td id="eh" style="border: 1px solid #333;text-align: center;"></td>
+                                        <td id="em" style="border: 1px solid #333;text-align: center;"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td style="border: 1px solid #333; text-align: right;"><strong>Total de horas por persona</strong></td>
+                                        <td id="temh" style="border: 1px solid #333;"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div> 
+                    <button id="clearButton" type="reset" class="btn btn-danger mt-3 w-100" onclick="clearData()">Limpiar</button>
+                    
+    </div>
+    
+    <script src="{% static 'js/calculadora-ucp.js' %}"></script>
+    
+</body>
+
+{% endblock %}
