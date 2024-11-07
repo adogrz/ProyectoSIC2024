@@ -152,36 +152,6 @@
                         {% endif %}
                     {% endfor %}
                     <tr>
-                        <td colspan="4" style="text-align: center; background: #3d0a91; color: white;"><b>PÉRDIDA EN VENTA O RETIRO DE ACTIVOS FIJOS</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "4202.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #3d0a91; color: white;"><b>GASTOS POR DETERIORO EN EL VALOR DE ACTIVOS</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "4203.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
                         <td colspan="4" style="text-align: center; background: #3d0a91; color: white;"><b>PÉRDIDAS POR SINIESTROS</b></td> 
                     </tr>
                     {% for cuenta in catalogo_cuentas %}

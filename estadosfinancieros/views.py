@@ -45,7 +45,7 @@ def cambio_patrimonial(request):
         'total_saldo_acreedor': total_saldo_acreedor,
         'nuevo_capital_social':nuevo_capital_social
     }
-    
+
     return render(request, 'cambio_patrimonial.html', context)
 
     
