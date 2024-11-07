@@ -8,6 +8,8 @@ class CatalogoCuenta(models.Model):
     nombreDeCuenta = models.CharField(max_length=100)
     debe = models.FloatField(null=True, blank=True)
     haber = models.FloatField(null=True, blank=True)
+    saldo_deudor = models.FloatField(null=True, blank=True)
+    saldo_acreedor = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.codigo} - {self.nombreDeCuenta}"

@@ -20,6 +20,7 @@ from django.urls import path
 from costos import views as costos_views
 from ucp import views as ucp_views
 from libromayor import views as libro_views
+from estadosfinancieros import views as estados_views
 
 
 def inicio_view(request):
@@ -45,5 +46,8 @@ urlpatterns = [
     path('transacciones/', libro_views.transaccion, name="formtransaccion"),
     path('obtener-cuentas/', libro_views.obtener_cuentas, name='obtener_cuentas'),
     path('libromayor/', libro_views.obtener_montos, name="libro_mayor"),
-    path('catalogo/', libro_views.catalogo, name="catalogo")
+    path('catalogo/', libro_views.catalogo, name="catalogo"),
+
+    #balance general
+    path('balancegeneral/', estados_views.balance_general, name="balance_general")
 ]
