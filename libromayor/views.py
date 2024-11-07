@@ -75,7 +75,6 @@ def obtener_montos(request):
         if cuenta.tipoDeCuenta == "Activo":
             cuenta.saldo_deudor = cuenta.debe - cuenta.haber
             cuenta.saldo_acreedor = 0
-
         elif cuenta.tipoDeCuenta == "Pasivo":
             cuenta.saldo_acreedor = cuenta.haber - cuenta.debe
             cuenta.saldo_deudor = 0
@@ -92,7 +91,6 @@ def obtener_montos(request):
             resultado = cuenta.haber - cuenta.debe
             cuenta.saldo_deudor = resultado if resultado < 0 else 0
             cuenta.saldo_acreedor = resultado if resultado > 0 else 0
-            
         else:
             # Si no hay tipo de cuenta, establecemos ambos saldos en 0
             cuenta.saldo_deudor = 0
