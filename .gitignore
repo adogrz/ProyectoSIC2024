@@ -14,6 +14,7 @@ staticfiles/
 # Ambiente virtual (por ejemplo, si usas virtualenv o venv)
 venv/
 .env/
+env/
 Pipfile
 Pipfile.lock
 
