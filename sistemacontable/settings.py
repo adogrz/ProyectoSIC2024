@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'costos',
     'ucp',
     'libromayor',
+    'estadosfinancieros',
 ]
 
 MIDDLEWARE = [

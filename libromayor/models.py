@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class CatalogoCuenta(models.Model):
     idCuenta = models.AutoField(primary_key=True)
     codigo = models.CharField(max_length=15)
@@ -10,5 +11,3 @@ class CatalogoCuenta(models.Model):
 
     def __str__(self):
         return f"{self.codigo} - {self.nombreDeCuenta}"
-     
-    
