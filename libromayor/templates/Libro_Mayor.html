@@ -987,8 +987,9 @@
                     <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
 
                     <!-- Mostrar saldo deudor y acreedor -->
-                    <td> $ {{ cuenta.debe|default:"0"|floatformat:2 }}</td>
-                    <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
+                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+                   
                 </tr>
                 {% endif %}
             {% endfor %}
