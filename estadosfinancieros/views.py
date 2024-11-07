@@ -2,6 +2,8 @@ from django.shortcuts import render
 from libromayor.models import CatalogoCuenta
 from django.db.models import Q
 
+from django.db.models import Q
+
 
 #cambio de patriomonio o estado de capital
 def cambio_patrimonial(request):
@@ -63,7 +65,6 @@ def balance_general(request):
         # Asegúrate de que los valores de 'debe' y 'haber' no sean nulos
         cuenta.debe = cuenta.debe if cuenta.debe is not None else 0
         cuenta.haber = cuenta.haber if cuenta.haber is not None else 0
-
         if cuenta.codigo == "7101":
             # Obtener el saldo deudor y acreedor de la cuenta 7101
             saldo_deudor_7101 = cuenta.saldo_deudor if cuenta.saldo_deudor is not None else 0
