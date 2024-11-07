@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    
+    <div class="container"><br><br><br>
+
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-8">
+            <h2 style="text-align: center;">Balance General</h2><br><br>
+            <form enctype="multipart/form-data" method="post">
+              <div class="row">
+                <div class="col-md-5">
+                </div>
+            </form><br><br>
+          </div>
+        </div><br><br><br>
+        <div class="row">
+          <div class="container">
+            <div class="table-responsive" style="border-color: black;">
+              <table class="table table-bordered table-striped table-sm">
+                <thead>
+                  <tr>
+                    <th style="text-align: center;">Nombre de la Cuenta</th>
+                    <th style="text-align: center;">Debe</th>
+                    <th style="text-align: center;">Haber</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for cuenta in catalogo_cuentas %}
+                    <tr>
+                        <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                        <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos, o los saldos deudor y acreedor si es la cuenta 7101 -->
+                        {% if cuenta.codigo == "7101" %}
+                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+                        {% else %}
+                            <td> $ {{ cuenta.debe|default:"0"|floatformat:2 }}</td>
+                            <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td><b>${{ total_debe|floatformat:2 }}</b></td>
+                        <td><b>${{ total_haber|floatformat:2 }}</b></td>
+                    </tr>
+                </tfoot>
+              </table><br><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      </div>
+
+</body>
+{% endblock %}
