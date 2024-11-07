@@ -64,6 +64,9 @@ def obtener_montos(request):
 
     # Calcular el saldo deudor y acreedor para cada cuenta
     for cuenta in catalogo_cuentas:
+        
+        if cuenta.nombreDeCuenta=="Nuevo Capital Social":
+            continue
         # Asegúrate de que los valores de 'debe' y 'haber' no sean nulos
         cuenta.debe = cuenta.debe if cuenta.debe is not None else 0
         cuenta.haber = cuenta.haber if cuenta.haber is not None else 0
@@ -84,9 +87,10 @@ def obtener_montos(request):
         elif cuenta.tipoDeCuenta == "Resultado Acreedor":
             cuenta.saldo_acreedor = cuenta.haber - cuenta.debe
             cuenta.saldo_deudor = 0 
-        elif cuenta.tipoDeCuenta == "Cuenta de Cierre":
-            cuenta.saldo_deudor = cuenta.debe if cuenta.tipoDeCuenta == "Cuenta de Cierre" else 0
-            cuenta.saldo_acreedor = cuenta.haber if cuenta.tipoDeCuenta == "Cuenta de Cierre" else 0
+        elif cuenta.tipoDeCuenta=="Cuenta de Cierre":
+            resultado = cuenta.haber - cuenta.debe
+            cuenta.saldo_deudor = resultado if resultado < 0 else 0
+            cuenta.saldo_acreedor = resultado if resultado > 0 else 0
         else:
             # Si no hay tipo de cuenta, establecemos ambos saldos en 0
             cuenta.saldo_deudor = 0

@@ -29,15 +29,20 @@
                   </tr>
                 </thead>
                 <tbody>
-                    {% for cuenta in catalogo_cuentas %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
+                  {% for cuenta in catalogo_cuentas %}
+                    <tr>
+                        <td>{{ cuenta.nombreDeCuenta }}</td>
 
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                        <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos, o los saldos deudor y acreedor si es la cuenta 7101 -->
+                        {% if cuenta.codigo == "7101" %}
+                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+                        {% else %}
                             <td> $ {{ cuenta.debe|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>                                                                                                                                                    
-                        </tr>
-                    {% endfor %}
+                            <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
                 </tbody>
                 <tfoot>
                     <tr>

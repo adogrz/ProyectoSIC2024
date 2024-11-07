@@ -48,6 +48,10 @@ urlpatterns = [
     path('libromayor/', libro_views.obtener_montos, name="libro_mayor"),
     path('catalogo/', libro_views.catalogo, name="catalogo"),
 
+    #Estados Financieros
+    path('cambio_patrimonial/', estados_views.cambio_patrimonial, name='cambio_patrimonial'),
+
+
     #balance general
     path('balancegeneral/', estados_views.balance_general, name="balance_general")
 ]
