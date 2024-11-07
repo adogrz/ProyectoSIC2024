@@ -54,5 +54,4 @@ urlpatterns = [
 
     #balance general
     path('balancegeneral/', estados_views.balance_general, name="balance_general")
-
 ]

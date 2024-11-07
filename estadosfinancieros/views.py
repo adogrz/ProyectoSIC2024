@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from libromayor.models import CatalogoCuenta
+
 from django.db.models import Q
 
 
@@ -64,6 +65,7 @@ def balance_general(request):
         cuenta.debe = cuenta.debe if cuenta.debe is not None else 0
         cuenta.haber = cuenta.haber if cuenta.haber is not None else 0
 
+
         if cuenta.codigo == "7101":
             # Obtener el saldo deudor y acreedor de la cuenta 7101
             saldo_deudor_7101 = cuenta.saldo_deudor if cuenta.saldo_deudor is not None else 0
@@ -76,12 +78,14 @@ def balance_general(request):
             total_debe += cuenta.debe
             total_haber += cuenta.haber
 
+
     context = {
         'catalogo_cuentas': catalogo_cuentas,  # Pasar las cuentas filtradas al contexto
         'total_debe': total_debe,
         'total_haber': total_haber,
         'saldo_deudor_7101': saldo_deudor_7101,
         'saldo_acreedor_7101': saldo_acreedor_7101,
+
     }
 
     return render(request, 'Balance_general.html', context)
