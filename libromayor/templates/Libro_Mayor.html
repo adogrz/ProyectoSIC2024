@@ -213,7 +213,7 @@
                         <td colspan="5" style="text-align: center; background: #20c997; color: white;"><b>MOBILIARIO Y EQUIPO</b></td>
                     </tr>
                     {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo == "1201.01.01" or cuenta.codigo == "1201.01.02" or cuenta.codigo == "1201.02.03" %}
+                        {% if cuenta.codigo in "1201.01.01, 1201.01.02, 1201.02.03" %}
                         <tr>
                             <td>{{ cuenta.nombreDeCuenta }}</td>
 
@@ -249,7 +249,7 @@
                         <td colspan="5" style="text-align: center; background: #20c997; color: white;"><b>INTANGIBLES</b></td>
                     </tr>
                     {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo == "1202.01" or cuenta.codigo == "1202.02" or cuenta.codigo == "1202.03, 1202.04" or cuenta.codigo == "1202.05, 1202.06" or cuenta.codigo == "1202.07" %}
+                        {% if cuenta.codigo in "1202.01, 1202.02, 1202.03, 1202.04, 1202.05, 1202.06, 1202.07" %}
                         <tr>
                             <td>{{ cuenta.nombreDeCuenta }}</td>
 
@@ -578,6 +578,24 @@
                     {% endfor %}
                     <tr>
                         <td colspan="5" style="text-align: center; background: #842029; color: white;"><b>DÉFICIT DE EJERCICIOS ANTERIORES</b></td>
+                    </tr>
+                    {% for cuenta in catalogo_cuentas %}
+                        {% if cuenta.codigo in "3203.01" %}
+                        <tr>
+                            <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                            <td> $ {{ cuenta.debe|default:"0"|floatformat:2 }}</td>
+                            <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
+
+                            <!-- Mostrar saldo deudor y acreedor -->
+                            <td>${{ cuenta.saldo_deudor|floatformat:2 }}</td>
+                            <td>${{ cuenta.saldo_acreedor|floatformat:2 }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; background: #842029; color: white;"><b>DÉFICIT DEL PRESENTE EJERCICIO</b></td>
                     </tr>
                     {% for cuenta in catalogo_cuentas %}
                         {% if cuenta.codigo in "3204.01" %}

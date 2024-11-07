@@ -2,7 +2,7 @@ from django.db import models
 
 class CatalogoCuenta(models.Model):
     idCuenta = models.AutoField(primary_key=True)
-    codigo = models.CharField(max_length=5)
+    codigo = models.CharField(max_length=15)
     tipoDeCuenta = models.CharField(max_length=50)
     nombreDeCuenta = models.CharField(max_length=100)
     debe = models.FloatField(null=True, blank=True)

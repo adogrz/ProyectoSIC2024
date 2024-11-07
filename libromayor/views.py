@@ -50,8 +50,6 @@ def obtener_cuentas(request):
             'codigo': cuenta.codigo,
             'nombre': cuenta.nombreDeCuenta
         })
-
-    print(data)
     # Devolver los datos en formato JSON
     return JsonResponse(data)
 
@@ -106,3 +104,6 @@ def obtener_montos(request):
     }
 
     return render(request, 'Libro_Mayor.html', context)
+
+def catalogo(request):
+    return render(request, 'Catalogo_cuentas.html')
