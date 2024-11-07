@@ -19,6 +19,7 @@ from django.shortcuts import render
 from django.urls import path
 from costos import views as costos_views
 from ucp import views as ucp_views
+from libromayor import views as libro_views
 
 
 def inicio_view(request):
@@ -39,4 +40,10 @@ urlpatterns = [
     # UCP
     path('costo_ucp/', ucp_views.costo_ucp, name='costo_ucp'),
     path('costo_venta/', ucp_views.costo_venta, name='costo_venta'),
+
+    #Libro Mayor, catalogo y transacciones
+    path('transacciones/', libro_views.transaccion, name="formtransaccion"),
+    path('obtener-cuentas/', libro_views.obtener_cuentas, name='obtener_cuentas'),
+    path('libromayor/', libro_views.obtener_montos, name="libro_mayor"),
+    path('catalogo/', libro_views.catalogo, name="catalogo")
 ]
