@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from libromayor.models import CatalogoCuenta
+from django.db.models import Q
 
 
 #cambio de patriomonio o estado de capital
@@ -44,19 +45,18 @@ def cambio_patrimonial(request):
         'total_saldo_acreedor': total_saldo_acreedor,
         'nuevo_capital_social':nuevo_capital_social
     }
-
- 
-
-
+    
     return render(request, 'cambio_patrimonial.html', context)
 
     
 def balance_general(request):
     # Obtener todas las cuentas de tipo Activo y Pasivo, y la cuenta con nombre "Capital Social"
-    catalogo_cuentas = CatalogoCuenta.objects.filter(tipoDeCuenta__in=["Activo", "Pasivo"])
+    catalogo_cuentas = CatalogoCuenta.objects.filter(Q(tipoDeCuenta__in=["Activo", "Pasivo"]) | Q(codigo="7101"))
 
     total_debe = 0
     total_haber = 0
+    saldo_deudor_7101 = 0
+    saldo_acreedor_7101 = 0
 
     # Calcular el total de debe y haber solo para las cuentas seleccionadas
     for cuenta in catalogo_cuentas:
@@ -64,14 +64,24 @@ def balance_general(request):
         cuenta.debe = cuenta.debe if cuenta.debe is not None else 0
         cuenta.haber = cuenta.haber if cuenta.haber is not None else 0
 
-        # Sumar los valores a los totales
-        total_debe += cuenta.debe
-        total_haber += cuenta.haber
+        if cuenta.codigo == "7101":
+            # Obtener el saldo deudor y acreedor de la cuenta 7101
+            saldo_deudor_7101 = cuenta.saldo_deudor if cuenta.saldo_deudor is not None else 0
+            saldo_acreedor_7101 = cuenta.saldo_acreedor if cuenta.saldo_acreedor is not None else 0
+            # Sumar los saldos en lugar de debe y haber
+            total_debe += saldo_deudor_7101
+            total_haber += saldo_acreedor_7101
+        else:
+            # Sumar los valores a los totales
+            total_debe += cuenta.debe
+            total_haber += cuenta.haber
 
     context = {
         'catalogo_cuentas': catalogo_cuentas,  # Pasar las cuentas filtradas al contexto
         'total_debe': total_debe,
         'total_haber': total_haber,
+        'saldo_deudor_7101': saldo_deudor_7101,
+        'saldo_acreedor_7101': saldo_acreedor_7101,
     }
 
     return render(request, 'Balance_general.html', context)
