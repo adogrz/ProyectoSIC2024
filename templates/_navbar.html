@@ -1,81 +1,99 @@
 <div class="px-3 py-2 bg-dark text-white">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-between">
-            <a href="/" class="d-flex align-items-center text-white text-decoration-none">
+            
+            <!-- Logo y Título -->
+            <a href="/" class="d-flex align-items-center text-white text-decoration-none me-4">
                 <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
                     <use xlink:href="#bootstrap"/>
                 </svg>
                 <span class="fs-4">SoluCode</span>
             </a>
+            
+            <!-- Menú de Navegación -->
             <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                <li>
+                
+                <!-- Menú Inicio -->
+                <li class="nav-item">
                     <a href="{% url 'inicio' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
                         Inicio
                     </a>
                 </li>
-                <li>
+
+                <!-- Menú Catálogo de Cuentas -->
+                <li class="nav-item">
                     <a href="{% url 'catalogo' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
-                        Catalogo de Cuentas
+                        Catálogo de Cuentas
                     </a>
                 </li>
-                <li>
+
+                <!-- Menú Transacciones -->
+                <li class="nav-item">
                     <a href="{% url 'formtransaccion' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
                         Transacciones
                     </a>
                 </li>
-                <li>
+
+                <!-- Menú Libro Mayor -->
+                <li class="nav-item">
                     <a href="{% url 'libro_mayor' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
                         Libro Mayor
                     </a>
                 </li>
-                <li>
 
-                  <a href="{% url 'cambio_patrimonial' %}" class="nav-link text-white">
-                      <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
-                      Cambio Patrimonial
-                  </a>
+                <!-- Menú Estados Financieros -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Estados Financieros
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'cambio_patrimonial' %}">
+                                Cambio Patrimonial
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'balance_general' %}">
+                                Balance General
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
 
-                    <a href="{% url 'balance_general' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
-                        Balance General
+                <!-- Menú Control de Costos -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Control de Costos
                     </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'calcular_costo_mano_obra' %}">
+                                Costo de Mano de Obra
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'lista_puestos' %}">
+                                Puestos de trabajo
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'calcular_costos_indirectos' %}">
+                                Costos Indirectos
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'costo_ucp' %}">
+                                Método UCP
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'costo_venta' %}">
+                                Costo de Venta
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <a href="{% url 'calcular_costo_mano_obra' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
-                        Costo de Mano de Obra
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'lista_puestos' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
-                        Puestos de trabajo
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'calcular_costos_indirectos' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
-                        Costos Indirectos
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'costo_ucp' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
-                        Metodo UCP
-                    </a>
-                </li>
-                <li>
-                    <a href="{% url 'costo_venta' %}" class="nav-link text-white">
-                        <svg class="bi d-block mx-auto mb-1" width="24" height="24"></svg>
-                        Costo de Venta
-                    </a>
-                </li>
+                
             </ul>
         </div>
     </div>
