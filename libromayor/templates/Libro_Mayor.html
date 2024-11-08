@@ -619,7 +619,7 @@
                         <td colspan="5" style="text-align: center; background: #3d0a91; color: white;"><b>COSTO DE VENTAS</b></td>
                     </tr>
                     {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "4101.01, 4101.01.01, 4101.01.02" %}
+                        {% if cuenta.codigo in "4101.01.01, 4101.01.02" %}
                         <tr>
                             <td>{{ cuenta.nombreDeCuenta }}</td>
 
@@ -637,7 +637,7 @@
                         <td colspan="5" style="text-align: center; background: #3d0a91; color: white;"><b>GASTOS ADMINISTRATIVOS</b></td>
                     </tr>
                     {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "4102.01, 4102.01.01, 4102.01.02, 4102.01.03, 4102.01.04, 4102.01.05, 4102.01.06, 4102.01.07, 4102.01.08, 4102.01.09, 4102.01.10, 4102.01.11" %}
+                        {% if cuenta.codigo in "4102.01.01, 4102.01.02, 4102.01.03, 4102.01.04, 4102.01.05, 4102.01.06, 4102.01.07, 4102.01.08, 4102.01.09, 4102.01.10, 4102.01.11" %}
                         <tr>
                             <td>{{ cuenta.nombreDeCuenta }}</td>
 
@@ -890,7 +890,7 @@
                     </tr>
                     
                     {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "5101.01, 5101.01.01, 5101.02, 5101.03" %}
+                        {% if cuenta.codigo in "5101.01.01, 5101.02, 5101.03" %}
                         <tr>
                             <td>{{ cuenta.nombreDeCuenta }}</td>
 
