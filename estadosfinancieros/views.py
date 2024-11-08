@@ -13,8 +13,8 @@ def obtener_saldo(codigo, naturaleza):
 def estado_resultados(request):
     # -------------- Ventas Netas ---------------
     ventas_consumidor_final = obtener_saldo('5101.01.01', 'acreedora')
-    descuentos_sobre_ventas = obtener_saldo('5101.02', 'deudora')
-    penalizaciones_sobre_ventas = obtener_saldo('5101.03', 'deudora')
+    descuentos_sobre_ventas = obtener_saldo('5101.02', 'acreedora')
+    penalizaciones_sobre_ventas = obtener_saldo('5101.03', 'acreedora')
     ventas_netas = ventas_consumidor_final - descuentos_sobre_ventas - penalizaciones_sobre_ventas
 
     # -------------- Costo de Ventas ----------
