@@ -2,240 +2,254 @@
 
 {% block content %}
 
-<style>
-    .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-    }
-
-    @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-            font-size: 3.5rem;
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
         }
-    }
-</style>
 
-<body>
-    
-    <div class="container"><br><br><br>
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
 
+    <body>
+
+    <div class="container mt-5 d-flex justify-content-center"><br><br><br>
         <div class="row">
-          <div class="col-md-1"></div>
-          <div class="col-md-8">
-            <h2 style="text-align: center; padding-left: 25%;">Cambio Patrimonial o Estado de Capital</h2><br><br>
-            <form enctype="multipart/form-data" method="post">
-              <div class="row">
-                <div class="col-md-5">
-                </div>
-            </form><br><br>
-          </div>
-        </div><br><br><br>
-        <div class="row">
-          <div class="container">
-            <div class="table-responsive" style="border-color: black;">
-              <table class="table table-bordered table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th style="text-align: center;">Nombre de la Cuenta</th>
-                    <th style="text-align: center;">Debe</th>
-                    <th style="text-align: center;">Haber</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>CAPITAL SOCIAL</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "3101.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>RESERVA LEGAL</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "3102.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>SUPERAVIT POR REVALUACIONES</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "3103.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>UTILIDADES DE EJERCICIOS ANTERIORES</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "3201.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>UTILIDAD DEL PRESENTE EJERCICIO</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "3202.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>DÉFICIT DE EJERCICIOS ANTERIORES</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "3203.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>DÉFICIT DEL PRESENTE EJERCICIO</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "3204.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #3d0a91; color: white;"><b>PÉRDIDAS POR SINIESTROS</b></td> 
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "4204.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <tr>
-                        <td colspan="4" style="text-align: center; background: #3d0a91; color: white;"><b>GASTOS DE EJERCICIOS ANTERIORES</b></td>
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                        {% if cuenta.codigo in "4205.01" %}
-                        <tr>
-                            <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                            <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                            <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                            <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                        </tr>
-                        {% endif %}
-                    {% endfor %}
-                    <td colspan="4" style="text-align: center; background: #087990; color: white;"><b>PÉRDIDAS Y GANANCIAS</b></td>
-                </tr>
-                {% for cuenta in catalogo_cuentas %}
-                    {% if cuenta.codigo in "6101.01" %}
-                    <tr>
-                        <td>{{ cuenta.nombreDeCuenta }}</td>
-    
-                        <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                        <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                        <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-    
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-                {% for cuenta in catalogo_cuentas %}
-                    {% if cuenta.codigo in "6101.02" %}
-                    <tr>
-                        <td>{{ cuenta.nombreDeCuenta }}</td>
-    
-                        <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                        <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                        <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-    
-                    </tr>
-                    {% endif %}
-                {% endfor %} 
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td><strong>Total</strong></td>
-                        <td><b>${{ total_saldo_deudor|floatformat:2 }}</b></td>
-                        <td><b>${{ total_saldo_acreedor|floatformat:2 }}</b></td>
-                        
-                    </tr>
-                    {% for cuenta in catalogo_cuentas %}
-                    {% if cuenta.codigo == "7101" %}
-                        <tr>
-                            <td><strong>{{ cuenta.nombreDeCuenta }}</strong></td>
-                            <!-- Mostrar 'Debe' como 0 y 'Haber' con nuevo_capital_social -->
-                            <td>$ 0.00</td>
-                            <td><b>$ {{ nuevo_capital_social|default:"0"|floatformat:2 }}</b></td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-                
-             
-                </tfoot>
-              </table><br><br><br>
+            <div class="col-md-1"></div>
+            <div class="col-md-8">
+                <h2 style="text-align: center;">SoluCode S.A.</h2>
+                <h3 style="text-align: center;">Cambio Patrimonial</h3>
+                <h3 style="text-align: center;">del 1 de enero al 30 de diciembre</h3>
+                <form enctype="multipart/form-data" method="post">
+                    <div class="row">
+                        <div class="col-md-5">
+                        </div>
+                </form>
+                <br><br>
             </div>
-          </div>
         </div>
-      </div>
-    
-      </div>
+        <br><br><br>
+        <div class="row">
+            <div class="container">
+                <div class="table-responsive" style="border-color: black;">
+                    <table class="table table-bordered table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">Nombre de la Cuenta</th>
+                            <th style="text-align: center;">Debe</th>
+                            <th style="text-align: center;">Haber</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>CAPITAL
+                                SOCIAL</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "3101.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
 
-</body>
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>RESERVA
+                                LEGAL</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "3102.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.haber|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>SUPERAVIT
+                                POR REVALUACIONES</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "3103.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>UTILIDADES
+                                DE EJERCICIOS ANTERIORES</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "3201.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>UTILIDAD
+                                DEL PRESENTE EJERCICIO</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "3202.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>DÉFICIT DE
+                                EJERCICIOS ANTERIORES</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "3203.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #842029; color: white;"><b>DÉFICIT
+                                DEL PRESENTE EJERCICIO</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "3204.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #3d0a91; color: white;"><b>PÉRDIDAS
+                                POR SINIESTROS</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "4204.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center; background: #3d0a91; color: white;"><b>GASTOS DE
+                                EJERCICIOS ANTERIORES</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "4205.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        <td colspan="4" style="text-align: center; background: #087990; color: white;"><b>PÉRDIDAS Y
+                            GANANCIAS</b></td>
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "6101.01" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo in "6101.02" %}
+                                <tr>
+                                    <td>{{ cuenta.nombreDeCuenta }}</td>
+
+                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
+                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
+                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
+
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td><b>${{ total_saldo_deudor|floatformat:2 }}</b></td>
+                            <td><b>${{ total_saldo_acreedor|floatformat:2 }}</b></td>
+
+                        </tr>
+                        {% for cuenta in catalogo_cuentas %}
+                            {% if cuenta.codigo == "7101" %}
+                                <tr>
+                                <td><strong>{{ cuenta.nombreDeCuenta }}</strong></td>
+                                <!-- Mostrar 'Debe' como 0 y 'Haber' con nuevo_capital_social -->
+                                <td>$ 0.00</td>
+                                <td><b>$ {{ nuevo_capital_social|default:"0"|floatformat:2 }}</b></td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+
+
+                        </tfoot>
+                    </table>
+                    <br><br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    </body>
 
 {% endblock %}

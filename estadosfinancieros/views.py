@@ -37,8 +37,9 @@ def estado_resultados(request):
     cuota_patronal_afp = obtener_saldo('4102.01.09', 'deudora')
     comisiones_premios = obtener_saldo('4102.01.10', 'deudora')
     otros_gastos_personal = obtener_saldo('4102.01.11', 'deudora')
-    gastos_administrativos = (salarios + vacaciones + aguinaldo + bonificicaciones + horas_extra + indemnizaciones_siniestros + viaticos
-                       + cuota_patronal_isss + cuota_patronal_afp + comisiones_premios + otros_gastos_personal)
+    gastos_administrativos = (
+                salarios + vacaciones + aguinaldo + bonificicaciones + horas_extra + indemnizaciones_siniestros + viaticos
+                + cuota_patronal_isss + cuota_patronal_afp + comisiones_premios + otros_gastos_personal)
 
     # Gastos de mantenimiento
     gastos_mantenimiento = (obtener_saldo('4102.02.01', 'deudora') + obtener_saldo('4102.02.02', 'deudora'))
@@ -113,50 +114,46 @@ def estado_resultados(request):
     return render(request, 'estado_resultados.html', context)
 
 
-from django.db.models import Q
-
-
-#cambio de patriomonio o estado de capital
+# cambio de patriomonio o estado de capital
 def cambio_patrimonial(request):
-    #obtener todas las cuentas de tipo patrimonio
+    # obtener todas las cuentas de tipo patrimonio
     catalogo_cuentas = (CatalogoCuenta.objects.filter(tipoDeCuenta="Patrimonio")
-                        |CatalogoCuenta.objects.filter(codigo="4202.01")
-                        |CatalogoCuenta.objects.filter(codigo="4203.01")
-                        |CatalogoCuenta.objects.filter(codigo="4204.01")
-                        |CatalogoCuenta.objects.filter(codigo="4205.01")
-                        |CatalogoCuenta.objects.filter(codigo="6101.01")
-                        |CatalogoCuenta.objects.filter(codigo="6101.02")
-                        |CatalogoCuenta.objects.filter(codigo="7101"))
+                        | CatalogoCuenta.objects.filter(codigo="4202.01")
+                        | CatalogoCuenta.objects.filter(codigo="4203.01")
+                        | CatalogoCuenta.objects.filter(codigo="4204.01")
+                        | CatalogoCuenta.objects.filter(codigo="4205.01")
+                        | CatalogoCuenta.objects.filter(codigo="6101.01")
+                        | CatalogoCuenta.objects.filter(codigo="6101.02")
+                        | CatalogoCuenta.objects.filter(codigo="7101"))
     total_saldo_deudor = 0
     total_saldo_acreedor = 0
-    nuevo_capital_social=0
+    nuevo_capital_social = 0
 
-    #calcular el saldo deudor y acreedor para cada cuenta
+    # calcular el saldo deudor y acreedor para cada cuenta
     for cuenta in catalogo_cuentas:
-        if cuenta.nombreDeCuenta=="Nuevo Capital Social":
+        if cuenta.nombreDeCuenta == "Nuevo Capital Social":
             continue
-        #asegurarse de que los valores de 'debe' y 'haber' no sean nulos
+        # asegurarse de que los valores de 'debe' y 'haber' no sean nulos
         cuenta.saldo_deudor = cuenta.saldo_deudor if cuenta.saldo_deudor is not None else 0
         cuenta.saldo_acreedor = cuenta.saldo_acreedor if cuenta.saldo_acreedor is not None else 0
 
-
-        #sumar los valores a los totales
+        # sumar los valores a los totales
         total_saldo_deudor += cuenta.saldo_deudor
         total_saldo_acreedor += cuenta.saldo_acreedor
 
-        #calcular el nuevo capital social
-        nuevo_capital_social=total_saldo_acreedor-total_saldo_deudor
+        # calcular el nuevo capital social
+        nuevo_capital_social = total_saldo_acreedor - total_saldo_deudor
 
-        cuenta_nuevo_capital=CatalogoCuenta.objects.filter(codigo="7101").first()
+        cuenta_nuevo_capital = CatalogoCuenta.objects.filter(codigo="7101").first()
         if cuenta_nuevo_capital:
-            cuenta_nuevo_capital.saldo_acreedor=nuevo_capital_social
+            cuenta_nuevo_capital.saldo_acreedor = nuevo_capital_social
             cuenta_nuevo_capital.save()
 
     context = {
         'catalogo_cuentas': catalogo_cuentas,
         'total_saldo_deudor': total_saldo_deudor,
         'total_saldo_acreedor': total_saldo_acreedor,
-        'nuevo_capital_social':nuevo_capital_social
+        'nuevo_capital_social': nuevo_capital_social
     }
 
     return render(request, 'cambio_patrimonial.html', context)
