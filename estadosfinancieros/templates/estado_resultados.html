@@ -1,52 +1,71 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container mt-5">
-        <h1 class="text-center">Estado de Resultados - SoluCode S.A.</h1>
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Concepto</th>
-                    <th>Monto</th>
-                </tr>
-            </thead>
+    <div class="container mt-5 d-flex justify-content-center">
+        <table class="table table-borderless" style="max-width: 700px;">
+            <!-- Encabezado con la información de la empresa y el periodo -->
+            <tr style="background-color: #f0f2f5;">
+                <th colspan="4" class="h4 text-center">SoluCode S.A.</th>
+            </tr>
+            <tr style="background-color: #f0f2f5;">
+                <th colspan="4" class="h5 text-center">Estado de Resultados</th>
+            </tr>
+            <tr style="background-color: #f0f2f5;">
+                <th colspan="4" class="h6 text-center">del 1 de enero al 30 de diciembre</th>
+            </tr>
+
+            <!-- Cuerpo de la tabla con los datos -->
             <tbody>
-                <tr>
-                    <td>Ventas Netas</td>
-                    <td>{{ ventas_netas }}</td>
-                </tr>
-                <tr>
-                    <td>Costo de Ventas</td>
-                    <td>{{ costo_ventas }}</td>
-                </tr>
-                <tr class="table-success">
-                    <td>Utilidad Bruta</td>
-                    <td>{{ utilidad_bruta }}</td>
-                </tr>
-                <tr>
-                    <td>Gastos de Operación</td>
-                    <td>{{ gastos_operacion }}</td>
-                </tr>
-                <tr class="table-success">
-                    <td>Utilidad en Operación</td>
-                    <td>{{ utilidad_operacion }}</td>
-                </tr>
-                <tr>
-                    <td>Otros Productos</td>
-                    <td>{{ total_productos }}</td>
-                </tr>
-                <tr class="table-success">
-                    <td>Utilidad Antes de Impuestos</td>
-                    <td>{{ utilidad_antes_impuestos }}</td>
-                </tr>
-                <tr>
-                    <td>Impuesto sobre la Renta</td>
-                    <td>{{ impuesto_renta }}</td>
-                </tr>
-                <tr class="table-success">
-                    <td>Utilidad Neta</td>
-                    <td>{{ utilidad_neta }}</td>
-                </tr>
+            <tr>
+                <td></td>
+                <td>VENTAS NETAS</td>
+                <td>${{ ventas_netas }}</td>
+            </tr>
+            <tr>
+                <td>(-)</td>
+                <td>COSTO DE VENTAS</td>
+                <td>${{ costo_ventas }}</td>
+            </tr>
+            <tr class="fw-bold table-success" style="background-color: #e1e6ed;">
+                <td>(=)</td>
+                <td>UTILIDAD BRUTA</td>
+                <td>${{ utilidad_bruta }}</td>
+            </tr>
+            <tr>
+                <td>(-)</td>
+                <td>GASTOS ADMINISTRATIVOS</td>
+                <td>${{ gastos_operacion }}</td>
+            </tr>
+            <tr class="fw-bold table-success" style="background-color: #e1e6ed;">
+                <td>(=)</td>
+                <td>UTILIDAD DE OPERACION</td>
+                <td>${{ utilidad_operacion }}</td>
+            </tr>
+            <tr>
+                <td>(+)</td>
+                <td>OTROS PRODUCTOS</td>
+                <td>${{ total_productos }}</td>
+            </tr>
+            <tr>
+                <td>(-)</td>
+                <td>OTROS COSTOS Y GASTOS</td>
+                <td>${{ otros_gastos }}</td>
+            </tr>
+            <tr class="fw-bold table-success" style="background-color: #e1e6ed;">
+                <td>(=)</td>
+                <td>UTILIDAD ANTES DE IMPUESTO</td>
+                <td>${{ utilidad_antes_impuestos }}</td>
+            </tr>
+            <tr>
+                <td>(+)</td>
+                <td>IMPUESTO 30%</td>
+                <td>${{ impuesto_renta }}</td>
+            </tr>
+            <tr class="fw-bold table-success" style="background-color: #e1e6ed;">
+                <td>(=)</td>
+                <td>UTILIDAD NETA</td>
+                <td>${{ utilidad_neta }}</td>
+            </tr>
             </tbody>
         </table>
     </div>
