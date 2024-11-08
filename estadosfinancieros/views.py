@@ -167,6 +167,7 @@ def balance_general(request):
     total_haber = 0
     saldo_deudor_7101 = 0
     saldo_acreedor_7101 = 0
+    cuenta_7101 = None
 
     # Calcular el total de debe y haber solo para las cuentas seleccionadas
     for cuenta in catalogo_cuentas:
@@ -177,6 +178,7 @@ def balance_general(request):
             # Obtener el saldo deudor y acreedor de la cuenta 7101
             saldo_deudor_7101 = cuenta.saldo_deudor if cuenta.saldo_deudor is not None else 0
             saldo_acreedor_7101 = cuenta.saldo_acreedor if cuenta.saldo_acreedor is not None else 0
+            cuenta_7101 = cuenta
             # Sumar los saldos en lugar de debe y haber
             total_debe += saldo_deudor_7101
             total_haber += saldo_acreedor_7101
@@ -186,7 +188,8 @@ def balance_general(request):
             total_haber += cuenta.haber
 
     context = {
-        'catalogo_cuentas': catalogo_cuentas,  # Pasar las cuentas filtradas al contexto
+        'catalogo_cuentas': [cuenta for cuenta in catalogo_cuentas if cuenta.codigo != "7101"],  # Excluir la cuenta 7101
+        'cuenta_7101': cuenta_7101,
         'total_debe': total_debe,
         'total_haber': total_haber,
         'saldo_deudor_7101': saldo_deudor_7101,
