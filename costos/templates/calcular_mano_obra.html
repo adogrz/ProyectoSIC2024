@@ -113,6 +113,7 @@
             <td>$${sueldoHoraActual.toFixed(2)}</td>
             <td>$${salarioProyecto.toFixed(2)}</td>
             <td>$${costoTotalPuesto.toFixed(2)}</td>
+            <td><button type="button" class="btn btn-danger" onclick="eliminarFila(this)">Eliminar</button></td>
         `;
 
             document.getElementById("tabla_body").appendChild(fila);
@@ -130,6 +131,13 @@
             });
 
             document.getElementById("total_costo_mano_obra").innerText = `$${total.toFixed(2)}`;
+        }
+
+        function eliminarFila(button) {
+            const fila = button.parentNode.parentNode;
+            fila.parentNode.removeChild(fila);
+            actualizarTotalCostoManoObra();
+            guardarDatosEnLocalStorage();
         }
 
         function guardarDatosEnLocalStorage() {
