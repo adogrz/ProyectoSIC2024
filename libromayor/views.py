@@ -3,7 +3,13 @@ from .models import CatalogoCuenta
 from django.contrib import messages
 from django.http import JsonResponse
 
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from libromayor.models import CatalogoCuenta
+
 def transaccion(request):
+    IVA_RATE = 0.13  # Tasa de IVA del 13%
+
     if request.method == 'POST':
         tipo_monto = request.POST.get('tipoDeMonto')  # Este debe coincidir con el nombre del campo en el modelo
         monto = request.POST.get('montoTransaccion')  # Este también debe coincidir
@@ -12,6 +18,10 @@ def transaccion(request):
         # Validar que el código de la cuenta existe y obtener el objeto correspondiente
         try:
             registro_catalogo = CatalogoCuenta.objects.get(codigo=codigo_cuenta)
+
+            # Calcular el IVA si la cuenta es "Debito Fiscal" o "Credito Fiscal"
+            if registro_catalogo.codigo in ["1106.01", "2107.01"]:
+                monto = float(monto) * IVA_RATE  # Solo el valor del IVA
 
             # Actualizar el monto en el debe o haber
             if tipo_monto == "Debe":
