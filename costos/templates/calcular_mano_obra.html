@@ -58,6 +58,10 @@
         let horasPersonaProyecto = 0;
         let sueldoHoraActual = 0;  // Almacena el sueldo por hora del puesto seleccionado
 
+        document.addEventListener("DOMContentLoaded", function () {
+            cargarDatosDesdeLocalStorage();
+        });
+
         function crearProyecto() {
             horasPersonaProyecto = parseFloat(document.getElementById("horas_persona_proyecto").value);
             if (isNaN(horasPersonaProyecto) || horasPersonaProyecto <= 0) {
@@ -70,6 +74,8 @@
 
             document.getElementById("tabla_body").innerHTML = "";
             document.getElementById("total_costo_mano_obra").innerText = "$0.00";
+
+            localStorage.clear();
         }
 
         function obtenerSueldoPorHora() {
@@ -111,6 +117,7 @@
 
             document.getElementById("tabla_body").appendChild(fila);
             actualizarTotalCostoManoObra();
+            guardarDatosEnLocalStorage();
         }
 
         function actualizarTotalCostoManoObra() {
@@ -123,6 +130,31 @@
             });
 
             document.getElementById("total_costo_mano_obra").innerText = `$${total.toFixed(2)}`;
+        }
+
+        function guardarDatosEnLocalStorage() {
+            const tablaBody = document.getElementById("tabla_body").innerHTML;
+            const totalCostoManoObra = document.getElementById("total_costo_mano_obra").innerText;
+            const horasPersonaProyecto = document.getElementById("horas_persona_proyecto").value;
+
+            localStorage.setItem("tablaBody", tablaBody);
+            localStorage.setItem("totalCostoManoObra", totalCostoManoObra);
+            localStorage.setItem("horasPersonaProyecto", horasPersonaProyecto);
+        }
+
+        function cargarDatosDesdeLocalStorage() {
+            const tablaBody = localStorage.getItem("tablaBody");
+            const totalCostoManoObra = localStorage.getItem("totalCostoManoObra");
+            const horasPersonaProyecto = localStorage.getItem("horasPersonaProyecto");
+
+            if (tablaBody) {
+                document.getElementById("tabla_body").innerHTML = tablaBody;
+                document.getElementById("total_costo_mano_obra").innerText = totalCostoManoObra;
+                document.getElementById("horas_persona_proyecto").value = horasPersonaProyecto;
+
+                document.getElementById("formulario_puesto").style.display = "block";
+                document.getElementById("tabla_resultados").style.display = "block";
+            }
         }
     </script>
 {% endblock %}
