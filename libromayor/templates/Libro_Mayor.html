@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -52,7 +53,7 @@
                     <td scope="col" style="text-align: center;">Acreedor</td>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="">
                   <tr>
                     <td colspan="5" style="text-align: center; background: #13795b; color: white;"><b>ACTIVOS</b></td>
                   </tr>
@@ -1010,6 +1011,8 @@
       </div>
     
       </div>
+
+      <script src="{% static 'js/obtener_montos.js' %}" defer></script>
 
 </body>
 
