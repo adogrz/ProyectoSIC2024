@@ -21,6 +21,7 @@ from costos import views as costos_views
 from ucp import views as ucp_views
 from libromayor import views as libro_views
 from estadosfinancieros import views as estados_views
+from libromayor.views import obtener_montos_json
 
 
 def inicio_view(request):
@@ -43,7 +44,7 @@ urlpatterns = [
     # Libro Mayor, catalogo y transacciones
     path('transacciones/', libro_views.transaccion, name="formtransaccion"),
     path('obtener-cuentas/', libro_views.obtener_cuentas, name='obtener_cuentas'),
-    path('libromayor/', libro_views.obtener_montos, name="libro_mayor"),
+    path('libromayor/', libro_views.libro_mayor, name="libro_mayor"),
     path('catalogo/', libro_views.catalogo, name="catalogo"),
 
     #Estados Financieros
@@ -53,5 +54,6 @@ urlpatterns = [
     #balance general
     path('estado_resultados/', estados_views.estado_resultados, name="estado_resultados"),
     # balance general
-    path('balancegeneral/', estados_views.balance_general, name="balance_general")
+    path('balancegeneral/', estados_views.balance_general, name="balance_general"),
+    path('obtener_montos_json/', obtener_montos_json, name='obtener_montos_json')
 ]
