@@ -25,6 +25,18 @@ def estado_resultados(request):
     # ------- Utilidad Bruta --------------
     utilidad_bruta = ventas_netas - costo_ventas
 
+    cuenta_perdidas_ganancias = CatalogoCuenta.objects.filter(codigo="6101.01").first()
+    if cuenta_perdidas_ganancias:
+        if utilidad_bruta > 0:
+            cuenta_perdidas_ganancias.haber = utilidad_bruta
+            cuenta_perdidas_ganancias.debe = 0
+        else:
+            cuenta_perdidas_ganancias.debe = utilidad_bruta
+            cuenta_perdidas_ganancias.haber = 0
+        cuenta_perdidas_ganancias.save()
+    else:
+        print("No se encontró la cuenta 6101.01")
+
     # Gastos Administrativos
     salarios = obtener_saldo('4102.01.01', 'deudora')
     vacaciones = obtener_saldo('4102.01.02', 'deudora')
