@@ -208,18 +208,6 @@
                                 </tr>
                             {% endif %}
                         {% endfor %}
-                        {% for cuenta in catalogo_cuentas %}
-                            {% if cuenta.codigo in "6101.02" %}
-                                <tr>
-                                    <td>{{ cuenta.nombreDeCuenta }}</td>
-
-                                    <!-- Mostrar 'Debe' y 'Haber' con 0 si son nulos -->
-                                    <td> $ {{ cuenta.saldo_deudor|default:"0"|floatformat:2 }}</td>
-                                    <td> $ {{ cuenta.saldo_acreedor|default:"0"|floatformat:2 }}</td>
-
-                                </tr>
-                            {% endif %}
-                        {% endfor %}
                         </tbody>
                         <tfoot>
                         <tr>
